@@ -3,6 +3,4 @@ bin/
 obj/
 
 # Ignore specific project and solution files
-Platformer.csproj
-Platformer.sln
 .DS_Store
