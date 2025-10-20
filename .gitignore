@@ -1,0 +1,8 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore specific project and solution files
+WoodleePlatformGameEngine.csproj
+WoodleePlatformGameEngine.sln
+.DS_Store

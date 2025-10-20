@@ -14,5 +14,4 @@
   </ul>
 
   <p>For developers(myself) familiar with <em>WoodleePlatformGameEngine</em>, this repo offers a fresh start with improved structure, documentation, and CI practices.</p>
-
 </body>
