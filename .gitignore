@@ -3,6 +3,6 @@ bin/
 obj/
 
 # Ignore specific project and solution files
-WoodleePlatformGameEngine.csproj
-WoodleePlatformGameEngine.sln
+Platformer.csproj
+Platformer.sln
 .DS_Store
