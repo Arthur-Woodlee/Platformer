@@ -20,10 +20,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore Platformer/Platformer.sln
+      run: dotnet restore Platformer.sln
 
     - name: Build solution
-      run: dotnet build Platformer/Platformer.sln --no-restore --configuration Release
+      run: dotnet build Platformer.sln --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test Platformer/Platformer.sln --no-build --configuration Release --logger "trx"
+      run: dotnet test Platformer.sln --no-build --configuration Release --logger "trx"
