@@ -6,7 +6,7 @@ namespace Platformer.PlatformerSequenceElementSelector
     public interface ISequence
     {
         Element Continue(ushort updateCycleLength, ushort cycleNumber);
-        ushort PixelsTravellingPerUpdate { get; set; }
-        TextureReel TextureReel { get; set; }
+        ushort PixelsTravellingPerUpdate { get; }
+        TextureReel TextureReel { get; }
     }
 }

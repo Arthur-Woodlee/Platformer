@@ -6,14 +6,10 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
     {
         private ControlManager _controlManager;
         private BoolCommand[] _requiredCommands;
-        private BoolCommand[] _restrictingCommands;
         private ISequence _lastReturned;
         private PlatformMoveSequenceConfig _sequenceConfig;
-        public PlatformMovementExecutionRule(ControlManager controlManager, BoolCommand[] requiredBoolCommands, BoolCommand[] restrictingBoolCommands, PlatformMoveSequenceConfig platformMoveSequenceConfig)
+        public PlatformMovementExecutionRule(PlatformMoveSequenceConfig platformMoveSequenceConfig)
         {
-            this._controlManager = controlManager;
-            this._requiredCommands = requiredBoolCommands;
-            this._restrictingCommands = restrictingBoolCommands;
             this._sequenceConfig = platformMoveSequenceConfig;
         }
         public ISequence Evaluate(ISequence current)
@@ -46,13 +42,6 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
             if (requiredCommandsCount != this._requiredCommands.Length)
             {
                 return false;
-            }
-            foreach (BoolCommand boolCommand in this._restrictingCommands)
-            {
-                if (this._controlManager.GetBoolCommand(boolCommand.Name))
-                {
-                    return false;
-                }
             }
             return true;
         }

@@ -14,10 +14,9 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
         public ushort Increment { get; private set; }
         public ushort MaxSpeed { get; private set; }
         public Direction Direction { get; private set; }
-        public TextureReel TextureReel { get { return _textureReel; } }
-        public bool Complete { get; private set; }
+        public TextureReel TextureReel { get ; private set; }
         private IRectangleSceneObject _sprite;
-        private TextureReel _textureReel;
+
         private PlatformMoveSequence(ushort pixelsTravellingPerUpdate, ushort slowRate, ICollisionDetector collisionDetector, IContactHandler contactHandler, ushort increment, ushort maxSpeed, Direction direction, IRectangleSceneObject sprite, TextureReel textureReel)
         {
             if (pixelsTravellingPerUpdate > maxSpeed)
@@ -35,8 +34,7 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
             this.MaxSpeed = maxSpeed;
             this.Direction = direction;
             this._sprite = sprite;
-            _textureReel = textureReel;
-            Complete = false;
+            this.TextureReel = textureReel;
         }
         public static PlatformMoveSequence Create(ushort pixelsTravellingPerUpdate, ushort slowRate, ICollisionDetector collisionDetector, IContactHandler contactHandler, ushort increment, ushort maxSpeed, Direction direction, IRectangleSceneObject sprite, TextureReel textureReel)
         {
@@ -54,12 +52,10 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
         {
             if (!OnPlatform(_sprite.GetPosition()))
             {
-                Complete = true;
                 return null;
             }
             if (PixelsTravellingPerUpdate == 0)
             {
-                Complete = true;
                 return null;
             }
             if ((cycleNumber % (updateCycleLength / PixelsTravellingPerUpdate)) == 0)
@@ -74,12 +70,11 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
                     PlatformerRectangle nextPosition = MoveRightSinglePixel(_sprite.GetPosition());
                     if (RectangleUtility.Equals(nextPosition, _sprite.GetPosition()))
                     {
-                        Complete = true;
                         return null;
                     }
                     else
                     {
-                        return new Element(_textureReel.GetTexture(), nextPosition);
+                        return new Element(TextureReel.GetTexture(), nextPosition);
                     }
                 }
                 else
@@ -88,12 +83,11 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
 
                     if (RectangleUtility.Equals(newPosition, _sprite.GetPosition()))
                     {
-                        Complete = true;
                         return null;
                     }
                     else
                     {
-                        return new Element(_textureReel.GetTexture(), newPosition);
+                        return new Element(TextureReel.GetTexture(), newPosition);
                     }
                 }
             }
@@ -103,15 +97,13 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
                 {
                     ApplySlowRate();
                 }
-                return new Element(_textureReel.Peek(), _sprite.GetPosition());
+                return new Element(TextureReel.Peek(), _sprite.GetPosition());
             }
         }
         private bool OnPlatform(PlatformerRectangle boundingBox)
         {
             if (_collisionDetector.DetectCollision(new PlatformerRectangle(boundingBox.X, boundingBox.Y + 1, boundingBox.Width, boundingBox.Height), _sprite) == null)
             {
-                // This tests if the sceneObject/sprite is on a platform
-                // This is not MakeContactWithSceneObjects becuase the boundingBox is already at this position and not moving to this position
                 return false;
             }
             else
@@ -123,8 +115,6 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
         {
             if (_collisionDetector.DetectCollision(new PlatformerRectangle(boundingBox.X, boundingBox.Y, boundingBox.Width, boundingBox.Height), _sprite) != null)
             {
-                // This tests if the sceneObject/sprite is already interecting
-                // This is not MakeContactWithSceneObjects becuase the boundingBox is already at this position and not moving to this position
                 return boundingBox;
             }
             LinkedList<Contact> contacts1 = _contactHandler.MakeContact(new PlatformerRectangle(boundingBox.X + 1, boundingBox.Y, boundingBox.Width, boundingBox.Height), _sprite, false);
@@ -198,8 +188,6 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
         {
             if (_collisionDetector.DetectCollision(new PlatformerRectangle(boundingBox.X, boundingBox.Y, boundingBox.Width, boundingBox.Height), _sprite) != null)
             {
-                // This tests if the sceneObject/sprite is already interecting
-                // This is not MakeContactWithSceneObjects becuase the boundingBox is already at this position and not moving to this position
                 return boundingBox;
             }
             if (boundingBox.X == 0)
@@ -274,13 +262,13 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences
         }
         public Texture2D GetTexture()
         {
-            if (_textureReel == null)
+            if (TextureReel == null)
             {
                 return null;
             }
             else
             {
-                return _textureReel.GetTexture();
+                return TextureReel.GetTexture();
             }
         }
         private void ApplySlowRate()
