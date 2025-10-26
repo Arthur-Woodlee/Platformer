@@ -40,5 +40,5 @@ If the current sequence is different, a fresh sequence is created using a new `T
 
 `PlatformMoveSequence` uses a private constructor and exposes a static `Create(...)` method.
 
-This design allows the method to return `null` when conditions are not mets. It ensures that invalid or non-permissible sequences are never instantiated.
+This design allows the method to return `null` when conditions are not mets(Factory Method Pattern). It ensures that invalid or non-permissible sequences are never instantiated.
 
