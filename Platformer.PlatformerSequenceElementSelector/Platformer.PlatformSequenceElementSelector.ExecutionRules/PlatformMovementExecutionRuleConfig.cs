@@ -1,5 +1,7 @@
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer.PlatformerElementSelector;
+using System;
 
 namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
 {
@@ -12,10 +14,11 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
         public ushort Increment;
         public ushort MaxSpeed;
         public Direction MoveDirection;
-        public Texture2D[] Textures;
+        public String[] Assets;
         public string SequenceId;
         public ushort InitialPixelsTravellingPerUpdate;
-        public PlatformMoveSequenceConfig(ElementSelectorSceneObject elementSelectorSceneObject, ushort slowRate, ICollisionDetector collisionDetector, IContactHandler contactHandler, ushort increment, ushort maxSpeed, Direction moveDirection, Texture2D[] textures, string sequenceId, ushort initialPixelsTravellingPerUpdate)
+        public ContentManager ContentManager;
+        public PlatformMoveSequenceConfig(ElementSelectorSceneObject elementSelectorSceneObject, ushort slowRate, ICollisionDetector collisionDetector, IContactHandler contactHandler, ushort increment, ushort maxSpeed, Direction moveDirection, String[] assets, string sequenceId, ushort initialPixelsTravellingPerUpdate, ContentManager contentManager)
         {
             this.ElementSelectorSceneObject = elementSelectorSceneObject;
             this.SlowRate = slowRate;
@@ -24,9 +27,11 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
             this.Increment = increment;
             this.MaxSpeed = maxSpeed;
             this.MoveDirection = moveDirection;
-            this.Textures = textures;
+            this.Assets = assets;
             this.SequenceId = sequenceId;
             this.InitialPixelsTravellingPerUpdate = initialPixelsTravellingPerUpdate;
+            this.ContentManager = contentManager;
+            
         }
     }
 }

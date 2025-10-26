@@ -1,4 +1,7 @@
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules.Input;
+using System;
 
 namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
 {
@@ -8,9 +11,20 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
         private BoolCommand[] _requiredCommands;
         private ISequence _lastReturned;
         private PlatformMoveSequenceConfig _sequenceConfig;
+        private Texture2D[] _textures;
         public PlatformMovementExecutionRule(PlatformMoveSequenceConfig platformMoveSequenceConfig)
         {
             this._sequenceConfig = platformMoveSequenceConfig;
+            this._textures = LoadAssets(_sequenceConfig.Assets);
+        }
+        private Texture2D[] LoadAssets(String[] assetNames)
+        {
+            Texture2D[] textures = new Texture2D[assetNames.Length];
+            for (int i = 0; i < assetNames.Length; i++)
+            {
+                textures[i] = _sequenceConfig.ContentManager.Load<Texture2D>(assetNames[i]);
+            }
+            return textures;
         }
         public ISequence Evaluate(ISequence current)
         {
@@ -23,7 +37,7 @@ namespace Platformer.PlatformerSequenceElementSelector.Sequences.ExecutionRules
                 }
                 else
                 {
-                    _lastReturned = PlatformMoveSequence.Create(_sequenceConfig.InitialPixelsTravellingPerUpdate, _sequenceConfig.SlowRate, _sequenceConfig.CollisionDetector, _sequenceConfig.ContactHandler, _sequenceConfig.Increment, _sequenceConfig.MaxSpeed, _sequenceConfig.MoveDirection, _sequenceConfig.ElementSelectorSceneObject, new TextureReel(_sequenceConfig.Textures));
+                    _lastReturned = PlatformMoveSequence.Create(_sequenceConfig.InitialPixelsTravellingPerUpdate, _sequenceConfig.SlowRate, _sequenceConfig.CollisionDetector, _sequenceConfig.ContactHandler, _sequenceConfig.Increment, _sequenceConfig.MaxSpeed, _sequenceConfig.MoveDirection, _sequenceConfig.ElementSelectorSceneObject, new TextureReel(_textures));
                     return _lastReturned;
                 }
             }
